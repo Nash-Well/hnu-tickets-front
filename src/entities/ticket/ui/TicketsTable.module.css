@@ -1,0 +1,12 @@
+.row {
+  cursor: pointer;
+}
+
+.titleCell {
+  min-width: 180px;
+  max-width: 360px;
+}
+
+.categoryCell {
+  max-width: 160px;
+}
