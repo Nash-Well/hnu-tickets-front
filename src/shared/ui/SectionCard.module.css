@@ -1,0 +1,33 @@
+.primary {
+  background: var(--app-surface-primary);
+  border: var(--app-border-width) solid var(--app-border-subtle);
+  border-radius: var(--mantine-radius-md);
+  padding: var(--mantine-spacing-lg);
+}
+
+.secondary {
+  background: transparent;
+  border-top: var(--app-border-width) solid var(--app-border-strong);
+  padding: var(--mantine-spacing-md) 0 0;
+}
+
+.flush {
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--mantine-spacing-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--mantine-spacing-md);
+}
+
+.flush .header {
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg) 0;
+}
+
+.secondary .header {
+  margin-bottom: var(--mantine-spacing-sm);
+}

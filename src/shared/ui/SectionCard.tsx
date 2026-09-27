@@ -1,23 +1,36 @@
 import type { ReactNode } from 'react'
-import { Group, Paper, type PaperProps, Text } from '@mantine/core'
+import { Box, type BoxProps, Text, Title } from '@mantine/core'
+import classes from './SectionCard.module.css'
 
-type SectionCardProps = PaperProps & {
+type SectionCardProps = BoxProps & {
   title?: ReactNode
   description?: ReactNode
   actions?: ReactNode
+  variant?: 'primary' | 'secondary'
+  flush?: boolean
   children: ReactNode
 }
 
-export function SectionCard({ title, description, actions, children, ...paperProps }: SectionCardProps) {
+export function SectionCard({
+  title,
+  description,
+  actions,
+  variant = 'primary',
+  flush = false,
+  children,
+  className,
+  ...boxProps
+}: SectionCardProps) {
+  const rootClassName = [classes[variant], flush && classes.flush, className].filter(Boolean).join(' ')
   return (
-    <Paper withBorder radius="md" p="lg" {...paperProps}>
+    <Box component="section" className={rootClassName} {...boxProps}>
       {(title || actions) && (
-        <Group justify="space-between" align="flex-start" mb="md" gap="sm" wrap="wrap">
+        <div className={classes.header}>
           <div style={{ minWidth: 0 }}>
             {title && (
-              <Text fw={600} size="md">
+              <Title order={variant === 'primary' ? 3 : 4} c={variant === 'secondary' ? 'dimmed' : undefined}>
                 {title}
-              </Text>
+              </Title>
             )}
             {description && (
               <Text size="xs" c="dimmed" mt={2}>
@@ -26,9 +39,9 @@ export function SectionCard({ title, description, actions, children, ...paperPro
             )}
           </div>
           {actions}
-        </Group>
+        </div>
       )}
       {children}
-    </Paper>
+    </Box>
   )
 }

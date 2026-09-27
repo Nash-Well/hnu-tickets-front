@@ -31,7 +31,7 @@ export function PageHeader({ title, description, actions, breadcrumbs }: PageHea
       )}
       <Group justify="space-between" align="flex-start" gap="md" wrap="wrap">
         <Stack gap={4} style={{ flex: '1 1 280px', minWidth: 0 }}>
-          <Title order={2} fw={700} style={{ wordBreak: 'break-word' }}>
+          <Title order={1} style={{ wordBreak: 'break-word' }}>
             {title}
           </Title>
           {typeof description === 'string' ? (

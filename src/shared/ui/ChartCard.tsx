@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
 import { Skeleton } from '@mantine/core'
-import { IconChartBar } from '@tabler/icons-react'
 import { EmptyState } from './EmptyState'
 import { ErrorState } from './ErrorState'
 import { SectionCard } from './SectionCard'
@@ -11,8 +10,10 @@ type ChartCardProps = {
   loading?: boolean
   error?: unknown
   isEmpty?: boolean
+  emptyMessage?: string
   onRetry?: () => void
   height?: number
+  footer?: ReactNode
   children: ReactNode
 }
 
@@ -22,26 +23,21 @@ export function ChartCard({
   loading = false,
   error,
   isEmpty = false,
+  emptyMessage = 'За обраний період даних немає.',
   onRetry,
-  height = 280,
+  height = 240,
+  footer,
   children,
 }: ChartCardProps) {
   const renderContent = () => {
     if (loading) {
-      return <Skeleton height={height} radius="md" />
+      return <Skeleton height={height} radius="sm" />
     }
     if (error) {
       return <ErrorState error={error} onRetry={onRetry} compact />
     }
     if (isEmpty) {
-      return (
-        <EmptyState
-          compact
-          icon={<IconChartBar size={20} stroke={1.5} />}
-          title="Немає даних"
-          description="За обраний період даних для відображення немає."
-        />
-      )
+      return <EmptyState compact title={emptyMessage} />
     }
     return children
   }
@@ -49,6 +45,7 @@ export function ChartCard({
   return (
     <SectionCard title={title} description={description} h="100%">
       {renderContent()}
+      {footer && !loading && !error && !isEmpty && footer}
     </SectionCard>
   )
 }

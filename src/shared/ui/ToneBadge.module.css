@@ -1,0 +1,65 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: max-content;
+  height: 22px;
+  padding: 0 8px;
+  border: var(--app-border-width) solid transparent;
+  border-radius: var(--mantine-radius-sm);
+  font-size: var(--mantine-font-size-xs);
+  line-height: 1;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.soft {
+  background: var(--tone-bg);
+  color: var(--tone-fg);
+}
+
+.outline {
+  background: transparent;
+  color: var(--tone-fg);
+  border-color: var(--tone-border);
+}
+
+.dashed {
+  border-style: dashed;
+}
+
+.solid {
+  background: var(--app-tone-danger-solid);
+  color: var(--mantine-color-white);
+}
+
+.text {
+  padding: 0;
+  height: auto;
+  background: transparent;
+  color: var(--tone-fg);
+}
+
+.muted {
+  color: var(--app-text-muted);
+}
+
+.italic {
+  font-style: italic;
+}
+
+.regular {
+  font-weight: 400;
+}
+
+.medium {
+  font-weight: 500;
+}
+
+.semibold {
+  font-weight: 600;
+}
+
+.bold {
+  font-weight: 700;
+}

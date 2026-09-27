@@ -1,30 +1,34 @@
 import type { ReactNode } from 'react'
-import { Stack, Text, ThemeIcon } from '@mantine/core'
-import { IconInbox } from '@tabler/icons-react'
+import { Group, Stack, Text } from '@mantine/core'
 
 type EmptyStateProps = {
   title: string
   description?: ReactNode
-  icon?: ReactNode
   action?: ReactNode
   compact?: boolean
 }
 
-export function EmptyState({ title, description, icon, action, compact = false }: EmptyStateProps) {
+export function EmptyState({ title, description, action, compact = false }: EmptyStateProps) {
+  if (compact) {
+    return (
+      <Group justify="space-between" gap="sm" py="sm" wrap="wrap">
+        <Text size="sm" c="dimmed">
+          {title}
+          {description && <> {description}</>}
+        </Text>
+        {action}
+      </Group>
+    )
+  }
   return (
-    <Stack align="center" gap="xs" py={compact ? 'lg' : 48} px="md" ta="center">
-      <ThemeIcon size={compact ? 40 : 56} radius="xl" variant="light" color="gray">
-        {icon ?? <IconInbox size={compact ? 20 : 28} stroke={1.5} />}
-      </ThemeIcon>
-      <Text fw={600} mt="xs">
-        {title}
-      </Text>
+    <Stack gap={6} py={40} px="md" align="flex-start" maw={520} mx="auto" w="100%">
+      <Text fw={600}>{title}</Text>
       {description && (
-        <Text size="sm" c="dimmed" maw={420}>
+        <Text size="sm" c="dimmed">
           {description}
         </Text>
       )}
-      {action && <div style={{ marginTop: 8 }}>{action}</div>}
+      {action && <div style={{ marginTop: 10 }}>{action}</div>}
     </Stack>
   )
 }

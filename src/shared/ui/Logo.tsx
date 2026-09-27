@@ -1,17 +1,17 @@
-import { Group, Text, ThemeIcon } from '@mantine/core'
-import { IconTicket } from '@tabler/icons-react'
+import { Group, Text } from '@mantine/core'
+import classes from './Logo.module.css'
 
-export function Logo() {
+export function Logo({ size = 'md' }: { size?: 'md' | 'lg' }) {
   return (
-    <Group gap="xs" wrap="nowrap">
-      <ThemeIcon size={34} radius="md" variant="gradient" gradient={{ from: 'indigo', to: 'cyan', deg: 135 }}>
-        <IconTicket size={20} aria-hidden />
-      </ThemeIcon>
+    <Group gap={10} wrap="nowrap">
+      <span className={[classes.mark, size === 'lg' && classes.markLarge].filter(Boolean).join(' ')} aria-hidden>
+        HNU
+      </span>
       <div>
-        <Text fw={700} size="sm" lh={1.1}>
+        <Text className={classes.name} fz={size === 'lg' ? 'lg' : 'md'}>
           HNU Tickets
         </Text>
-        <Text size="xs" c="dimmed" lh={1.1}>
+        <Text size="xs" c="dimmed" lh={1.2}>
           Технічна підтримка
         </Text>
       </div>

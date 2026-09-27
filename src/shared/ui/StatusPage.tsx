@@ -13,8 +13,8 @@ type StatusPageProps = {
 export function StatusPage({ code, title, description, actionLabel, actionTo }: StatusPageProps) {
   return (
     <Center mih="60vh" px="md">
-      <Stack align="center" gap="sm" ta="center" maw={480}>
-        <Text fz={72} fw={800} c="dimmed" lh={1} aria-hidden>
+      <Stack gap="sm" maw={480}>
+        <Text fz={72} fw={600} c="dimmed" lh={1} className="app-numeral" aria-hidden>
           {code}
         </Text>
         <Title order={2}>{title}</Title>
