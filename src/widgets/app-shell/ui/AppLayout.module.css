@@ -1,0 +1,34 @@
+.main {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  min-height: 100dvh;
+}
+
+.content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.navLink {
+  border-radius: var(--mantine-radius-md);
+  font-weight: 500;
+}
+
+.footer {
+  border-top: 1px solid var(--mantine-color-default-border);
+  padding-top: var(--mantine-spacing-sm);
+}
+
+.skipLink {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 1000;
+  padding: 8px 12px;
+  border-radius: var(--mantine-radius-sm);
+  background: var(--mantine-color-body);
+  color: var(--mantine-color-text);
+}
+
+.skipLink:focus {
+  left: 8px;
+}
