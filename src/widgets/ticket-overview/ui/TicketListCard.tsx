@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react'
 import { Button } from '@mantine/core'
 import { IconArrowRight } from '@tabler/icons-react'
 import { Link } from 'react-router'
@@ -7,11 +6,8 @@ import { EmptyState, ErrorState, SectionCard } from '@/shared/ui'
 
 type TicketListCardProps = {
   title: string
-  description?: string
   params: TicketListParams
   emptyTitle: string
-  emptyDescription?: string
-  emptyIcon?: ReactNode
   viewAllTo?: string
   showAuthor?: boolean
   showAssignee?: boolean
@@ -19,11 +15,8 @@ type TicketListCardProps = {
 
 export function TicketListCard({
   title,
-  description,
   params,
   emptyTitle,
-  emptyDescription,
-  emptyIcon,
   viewAllTo,
   showAuthor = false,
   showAssignee = true,
@@ -36,7 +29,7 @@ export function TicketListCard({
       return <ErrorState error={tickets.error} onRetry={() => tickets.refetch()} compact />
     }
     if (tickets.isSuccess && items.length === 0) {
-      return <EmptyState compact title={emptyTitle} description={emptyDescription} icon={emptyIcon} />
+      return <EmptyState compact title={emptyTitle} />
     }
     return (
       <TicketsTable
@@ -53,7 +46,6 @@ export function TicketListCard({
   return (
     <SectionCard
       title={title}
-      description={description}
       actions={
         viewAllTo &&
         (tickets.data?.total ?? 0) > 0 && (

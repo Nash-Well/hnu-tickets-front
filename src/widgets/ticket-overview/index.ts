@@ -1,3 +1,5 @@
+export { ActionQueue } from './ui/ActionQueue'
+export type { QueueSection } from './ui/ActionQueue'
 export { RequesterSummary } from './ui/RequesterSummary'
 export { SpecialistSummary } from './ui/SpecialistSummary'
 export { TicketListCard } from './ui/TicketListCard'

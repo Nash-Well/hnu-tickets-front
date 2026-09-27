@@ -16,36 +16,20 @@ export type NavigationItem = {
   icon: Icon
   roles: UserRole[]
   end?: boolean
+  dividerBefore?: boolean
 }
 
-export type NavigationSection = {
-  title: string
-  items: NavigationItem[]
-}
-
-export const navigationSections: NavigationSection[] = [
-  {
-    title: 'Робота',
-    items: [
-      { label: 'Головна', to: paths.dashboard, icon: IconLayoutDashboard, roles: ['USER', 'SPECIALIST', 'ADMIN'] },
-      { label: 'Мої заявки', to: paths.tickets, icon: IconTicket, roles: ['USER'], end: true },
-      { label: 'Мої задачі', to: paths.tickets, icon: IconTicket, roles: ['SPECIALIST'], end: true },
-      { label: 'Усі заявки', to: paths.tickets, icon: IconTicket, roles: ['ADMIN'], end: true },
-      { label: 'Нова заявка', to: paths.ticketCreate, icon: IconSquarePlus, roles: ['USER'] },
-    ],
-  },
-  {
-    title: 'Адміністрування',
-    items: [
-      { label: 'Аналітика', to: paths.analytics, icon: IconChartBar, roles: ['ADMIN'] },
-      { label: 'Користувачі', to: paths.users, icon: IconUsers, roles: ['ADMIN'] },
-      { label: 'Категорії', to: paths.categories, icon: IconCategory, roles: ['ADMIN'] },
-    ],
-  },
+const navigationItems: NavigationItem[] = [
+  { label: 'Головна', to: paths.dashboard, icon: IconLayoutDashboard, roles: ['USER', 'SPECIALIST', 'ADMIN'] },
+  { label: 'Мої заявки', to: paths.tickets, icon: IconTicket, roles: ['USER'], end: true },
+  { label: 'Мої задачі', to: paths.tickets, icon: IconTicket, roles: ['SPECIALIST'], end: true },
+  { label: 'Усі заявки', to: paths.tickets, icon: IconTicket, roles: ['ADMIN'], end: true },
+  { label: 'Нова заявка', to: paths.ticketCreate, icon: IconSquarePlus, roles: ['USER'] },
+  { label: 'Аналітика', to: paths.analytics, icon: IconChartBar, roles: ['ADMIN'], dividerBefore: true },
+  { label: 'Користувачі', to: paths.users, icon: IconUsers, roles: ['ADMIN'] },
+  { label: 'Категорії', to: paths.categories, icon: IconCategory, roles: ['ADMIN'] },
 ]
 
-export function getNavigationForRole(role: UserRole): NavigationSection[] {
-  return navigationSections
-    .map((section) => ({ ...section, items: section.items.filter((item) => item.roles.includes(role)) }))
-    .filter((section) => section.items.length > 0)
+export function getNavigationForRole(role: UserRole): NavigationItem[] {
+  return navigationItems.filter((item) => item.roles.includes(role))
 }

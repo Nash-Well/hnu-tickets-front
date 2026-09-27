@@ -1,4 +1,4 @@
-import { Badge, Grid, Group, Paper, Stack, Tabs, Text } from '@mantine/core'
+import { Grid, Group, Stack, Tabs, Text } from '@mantine/core'
 import { IconHistory, IconMessageCircle } from '@tabler/icons-react'
 import { useTicketComments } from '@/entities/comment'
 import { useTicketHistory } from '@/entities/history'
@@ -33,7 +33,7 @@ export function TicketDetails({ ticket }: { ticket: Ticket }) {
         }
         actions={canEditTicket(ticket, viewer) && <EditTicketButton ticket={ticket} />}
       />
-      <Grid gap="lg">
+      <Grid gap="xl">
         <Grid.Col span={{ base: 12, md: 8 }} order={{ base: 2, md: 1 }}>
           <Stack gap="lg">
             <SectionCard title="Опис проблеми">
@@ -41,17 +41,17 @@ export function TicketDetails({ ticket }: { ticket: Ticket }) {
                 {ticket.description}
               </Text>
             </SectionCard>
-            <Paper withBorder radius="md">
+            <SectionCard flush>
               <Tabs defaultValue="comments" keepMounted={false}>
-                <Tabs.List px="md" pt="xs">
+                <Tabs.List px="md">
                   <Tabs.Tab
                     value="comments"
                     leftSection={<IconMessageCircle size={16} />}
                     rightSection={
                       comments.data && (
-                        <Badge size="xs" variant="light" circle>
+                        <Text span size="xs" c="dimmed" className="app-tabular">
                           {comments.data.length}
-                        </Badge>
+                        </Text>
                       )
                     }
                   >
@@ -81,11 +81,11 @@ export function TicketDetails({ ticket }: { ticket: Ticket }) {
                   />
                 </Tabs.Panel>
               </Tabs>
-            </Paper>
+            </SectionCard>
           </Stack>
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 4 }} order={{ base: 1, md: 2 }}>
-          <Stack gap="lg">
+          <Stack gap="xl">
             <TicketActionsCard ticket={ticket} />
             <TicketSummaryCard ticket={ticket} />
           </Stack>

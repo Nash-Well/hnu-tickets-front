@@ -1,22 +1,19 @@
-import { Divider, Group, Stack, Text } from '@mantine/core'
+import { Divider, Stack, Text } from '@mantine/core'
 import { PriorityBadge, StatusBadge, type Ticket } from '@/entities/ticket'
 import { formatDateTime } from '@/shared/lib'
-import { InfoRow, SectionCard, UserAvatar } from '@/shared/ui'
+import { InfoRow, SectionCard } from '@/shared/ui'
 
 function Person({ name }: { name: string }) {
   return (
-    <Group gap={6} wrap="nowrap" justify="flex-end">
-      <UserAvatar name={name} size={22} />
-      <Text size="sm" fw={500} truncate>
-        {name}
-      </Text>
-    </Group>
+    <Text size="sm" truncate>
+      {name}
+    </Text>
   )
 }
 
 export function TicketSummaryCard({ ticket }: { ticket: Ticket }) {
   return (
-    <SectionCard title="Інформація">
+    <SectionCard title="Інформація" variant="secondary">
       <Stack gap={0}>
         <InfoRow label="Статус">
           <StatusBadge status={ticket.status} withTooltip />
@@ -25,11 +22,11 @@ export function TicketSummaryCard({ ticket }: { ticket: Ticket }) {
           <PriorityBadge priority={ticket.priority} />
         </InfoRow>
         <InfoRow label="Категорія">
-          <Text size="sm" fw={500}>
+          <Text size="sm">
             {ticket.category.name}
           </Text>
         </InfoRow>
-        <Divider my="xs" />
+        <Divider my={6} color="var(--app-border-subtle)" />
         <InfoRow label="Автор">
           <Person name={ticket.createdBy.name} />
         </InfoRow>
@@ -42,21 +39,21 @@ export function TicketSummaryCard({ ticket }: { ticket: Ticket }) {
             </Text>
           )}
         </InfoRow>
-        <Divider my="xs" />
+        <Divider my={6} color="var(--app-border-subtle)" />
         <InfoRow label="Створено">
-          <Text size="sm">{formatDateTime(ticket.createdAt)}</Text>
+          <Text size="sm" component="time" dateTime={ticket.createdAt ?? undefined}>{formatDateTime(ticket.createdAt)}</Text>
         </InfoRow>
         <InfoRow label="Оновлено">
-          <Text size="sm">{formatDateTime(ticket.updatedAt)}</Text>
+          <Text size="sm" component="time" dateTime={ticket.updatedAt ?? undefined}>{formatDateTime(ticket.updatedAt)}</Text>
         </InfoRow>
         {ticket.resolvedAt && (
           <InfoRow label="Вирішено">
-            <Text size="sm">{formatDateTime(ticket.resolvedAt)}</Text>
+            <Text size="sm" component="time" dateTime={ticket.resolvedAt ?? undefined}>{formatDateTime(ticket.resolvedAt)}</Text>
           </InfoRow>
         )}
         {ticket.closedAt && (
           <InfoRow label="Закрито">
-            <Text size="sm">{formatDateTime(ticket.closedAt)}</Text>
+            <Text size="sm" component="time" dateTime={ticket.closedAt ?? undefined}>{formatDateTime(ticket.closedAt)}</Text>
           </InfoRow>
         )}
       </Stack>

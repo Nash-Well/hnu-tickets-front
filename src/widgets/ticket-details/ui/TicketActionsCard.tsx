@@ -1,4 +1,4 @@
-import { Divider, Stack, Text } from '@mantine/core'
+import { Divider, Stack } from '@mantine/core'
 import { useViewer } from '@/entities/session'
 import { canAssignTicket, type Ticket } from '@/entities/ticket'
 import { AssignSpecialistForm } from '@/features/ticket-assign'
@@ -11,15 +11,10 @@ export function TicketActionsCard({ ticket }: { ticket: Ticket }) {
   return (
     <SectionCard title="Дії">
       <Stack gap="md">
-        <div>
-          <Text size="xs" fw={700} c="dimmed" tt="uppercase" mb="xs" lts={0.4}>
-            Статус
-          </Text>
-          <TicketStatusActions ticket={ticket} />
-        </div>
+        <TicketStatusActions ticket={ticket} />
         {showAssign && (
           <>
-            <Divider />
+            <Divider color="var(--app-border-subtle)" />
             <AssignSpecialistForm key={ticket.assignedTo?.id ?? 'unassigned'} ticket={ticket} />
           </>
         )}

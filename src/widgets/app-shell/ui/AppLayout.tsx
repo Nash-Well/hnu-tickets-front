@@ -1,19 +1,18 @@
-import { AppShell, Burger, Group, NavLink, ScrollArea, Stack, Text } from '@mantine/core'
+import { useEffect } from 'react'
+import { AppShell, Burger, Divider, Group, NavLink, ScrollArea, Stack } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { NavLink as RouterNavLink, Outlet, useLocation } from 'react-router'
-import { useEffect } from 'react'
 import { useViewer } from '@/entities/session'
-import { RoleBadge } from '@/entities/user'
 import { ColorSchemeToggle, Logo } from '@/shared/ui'
 import { getNavigationForRole } from '../model/navigation'
-import { UserMenu } from './UserMenu'
 import classes from './AppLayout.module.css'
+import { UserMenu } from './UserMenu'
 
 export function AppLayout() {
   const viewer = useViewer()
   const [opened, { toggle, close }] = useDisclosure(false)
   const location = useLocation()
-  const sections = getNavigationForRole(viewer.role)
+  const items = getNavigationForRole(viewer.role)
 
   useEffect(() => {
     close()
@@ -21,9 +20,10 @@ export function AppLayout() {
 
   return (
     <AppShell
-      header={{ height: 60 }}
-      navbar={{ width: 260, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      header={{ height: 56 }}
+      navbar={{ width: 232, breakpoint: 'sm', collapsed: { mobile: !opened } }}
       padding={{ base: 'md', md: 'xl' }}
+      classNames={{ header: classes.header, navbar: classes.navbar, main: classes.main }}
     >
       <a href="#main-content" className={classes.skipLink}>
         Перейти до основного вмісту
@@ -40,7 +40,7 @@ export function AppLayout() {
             />
             <Logo />
           </Group>
-          <Group gap="sm" wrap="nowrap">
+          <Group gap="xs" wrap="nowrap">
             <ColorSchemeToggle />
             <UserMenu />
           </Group>
@@ -48,39 +48,24 @@ export function AppLayout() {
       </AppShell.Header>
       <AppShell.Navbar p="sm" aria-label="Основна навігація">
         <AppShell.Section grow component={ScrollArea}>
-          <Stack gap="lg">
-            {sections.map((section) => (
-              <div key={section.title}>
-                <Text size="xs" fw={700} c="dimmed" tt="uppercase" px="sm" mb={6} lts={0.5}>
-                  {section.title}
-                </Text>
-                <Stack gap={2}>
-                  {section.items.map((item) => (
-                    <NavLink
-                      key={item.label}
-                      component={RouterNavLink}
-                      to={item.to}
-                      end={item.end}
-                      label={item.label}
-                      leftSection={<item.icon size={18} stroke={1.6} />}
-                      className={classes.navLink}
-                    />
-                  ))}
-                </Stack>
+          <Stack gap={2}>
+            {items.map((item) => (
+              <div key={item.label}>
+                {item.dividerBefore && <Divider my="sm" color="var(--app-border-subtle)" />}
+                <NavLink
+                  component={RouterNavLink}
+                  to={item.to}
+                  end={item.end}
+                  label={item.label}
+                  leftSection={<item.icon size={17} stroke={1.5} />}
+                  className={classes.navLink}
+                />
               </div>
             ))}
           </Stack>
         </AppShell.Section>
-        <AppShell.Section className={classes.footer}>
-          <Group justify="space-between" px="sm" gap="xs">
-            <Text size="xs" c="dimmed">
-              Ваша роль
-            </Text>
-            <RoleBadge role={viewer.role} />
-          </Group>
-        </AppShell.Section>
       </AppShell.Navbar>
-      <AppShell.Main id="main-content" className={classes.main}>
+      <AppShell.Main id="main-content">
         <div className={classes.content}>
           <Outlet />
         </div>

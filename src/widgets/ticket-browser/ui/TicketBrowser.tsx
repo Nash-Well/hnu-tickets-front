@@ -1,11 +1,11 @@
-import { Button, Group, Pagination, Paper, Select, Text } from '@mantine/core'
-import { IconPlus, IconSearchOff } from '@tabler/icons-react'
+import { Button, Group, Pagination, Select, Text } from '@mantine/core'
+import { IconPlus } from '@tabler/icons-react'
 import { Link } from 'react-router'
 import { useViewer } from '@/entities/session'
 import { TicketsTable, useTickets } from '@/entities/ticket'
 import { TicketFiltersBar, useTicketListParams } from '@/features/ticket-filters'
 import { paths } from '@/shared/routes'
-import { EmptyState, ErrorState } from '@/shared/ui'
+import { EmptyState, ErrorState, SectionCard } from '@/shared/ui'
 
 const PAGE_SIZE_OPTIONS = ['10', '20', '50', '100']
 
@@ -50,7 +50,6 @@ export function TicketBrowser() {
     if (tickets.isSuccess && items.length === 0) {
       return hasFilters ? (
         <EmptyState
-          icon={<IconSearchOff size={28} stroke={1.5} />}
           title="Нічого не знайдено"
           description="Спробуйте змінити параметри пошуку або скинути фільтри."
           action={
@@ -89,10 +88,10 @@ export function TicketBrowser() {
   return (
     <>
       <TicketFiltersBar params={params} showSpecialistFilter={isAdmin} />
-      <Paper withBorder radius="md" style={{ opacity: tickets.isPlaceholderData ? 0.6 : 1, transition: 'opacity 150ms' }}>
+      <SectionCard flush style={{ opacity: tickets.isPlaceholderData ? 0.6 : 1, transition: 'opacity 150ms' }}>
         {renderBody()}
         {total > 0 && (
-          <Group justify="space-between" p="md" gap="sm" wrap="wrap" style={{ borderTop: '1px solid var(--mantine-color-default-border)' }}>
+          <Group justify="space-between" p="md" gap="sm" wrap="wrap" style={{ borderTop: 'var(--app-border-width) solid var(--app-border-subtle)' }}>
             <Group gap="sm">
               <Text size="sm" c="dimmed" aria-live="polite">
                 {rangeStart}–{rangeEnd} з {total}
@@ -117,7 +116,7 @@ export function TicketBrowser() {
             />
           </Group>
         )}
-      </Paper>
+      </SectionCard>
     </>
   )
 }

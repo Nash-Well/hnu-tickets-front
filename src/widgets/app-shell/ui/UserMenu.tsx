@@ -16,9 +16,9 @@ export function UserMenu() {
       <Menu.Target>
         <UnstyledButton aria-label="Меню користувача" style={{ borderRadius: 8, padding: 4 }}>
           <Group gap="xs" wrap="nowrap">
-            <UserAvatar name={viewer.name} size={32} />
+            <UserAvatar name={viewer.name} size={30} />
             <Box visibleFrom="sm">
-              <Text size="sm" fw={600} lh={1.2}>
+              <Text size="sm" fw={500} lh={1.2}>
                 {viewer.name}
               </Text>
               <Text size="xs" c="dimmed" lh={1.2}>
@@ -35,7 +35,7 @@ export function UserMenu() {
           Мій профіль
         </Menu.Item>
         <Menu.Divider />
-        <Menu.Item color="red" leftSection={<IconLogout size={16} />} onClick={logout}>
+        <Menu.Item leftSection={<IconLogout size={16} />} onClick={logout}>
           Вийти
         </Menu.Item>
       </Menu.Dropdown>

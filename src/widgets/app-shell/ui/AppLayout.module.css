@@ -1,21 +1,35 @@
+.header {
+  background: var(--app-surface-primary);
+  border-bottom: var(--app-border-width) solid var(--app-border-subtle);
+}
+
+.navbar {
+  background: var(--app-surface-canvas);
+  border-right: var(--app-border-width) solid var(--app-border-subtle);
+}
+
 .main {
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  background: var(--app-surface-canvas);
   min-height: 100dvh;
 }
 
 .content {
-  max-width: 1400px;
+  max-width: 1320px;
   margin: 0 auto;
 }
 
 .navLink {
-  border-radius: var(--mantine-radius-md);
-  font-weight: 500;
+  color: var(--mantine-color-text);
 }
 
-.footer {
-  border-top: 1px solid var(--mantine-color-default-border);
-  padding-top: var(--mantine-spacing-sm);
+.navLink:where([data-active]) {
+  background: var(--app-accent-soft);
+  color: var(--app-accent-on-soft);
+  font-weight: 600;
+}
+
+.navLink:where([data-active]) :global(.mantine-NavLink-section) {
+  color: var(--app-accent-on-soft);
 }
 
 .skipLink {

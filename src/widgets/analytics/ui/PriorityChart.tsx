@@ -1,5 +1,5 @@
 import { type AnalyticsPeriod, usePriorityAnalytics } from '@/entities/analytics'
-import { priorityColors, priorityLabels, TICKET_PRIORITIES } from '@/entities/ticket'
+import { priorityChartColor, priorityLabels, TICKET_PRIORITIES } from '@/entities/ticket'
 import { ChartCard, DistributionList } from '@/shared/ui'
 
 export function PriorityChart({ period }: { period: AnalyticsPeriod }) {
@@ -9,13 +9,13 @@ export function PriorityChart({ period }: { period: AnalyticsPeriod }) {
     key: priority,
     label: priorityLabels[priority],
     value: byPriority.get(priority) ?? 0,
-    color: priorityColors[priority],
+    color: priorityChartColor[priority],
   }))
   const total = items.reduce((sum, item) => sum + item.value, 0)
 
   return (
     <ChartCard
-      title="Заявки за пріоритетами"
+      title="За пріоритетами"
       loading={priorities.isLoading}
       error={priorities.isError && !priorities.data ? priorities.error : null}
       onRetry={() => priorities.refetch()}

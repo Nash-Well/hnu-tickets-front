@@ -1,5 +1,4 @@
 import { Divider, Skeleton, Stack } from '@mantine/core'
-import { IconMessageCircle } from '@tabler/icons-react'
 import { CommentItem, type TicketComment } from '@/entities/comment'
 import type { Ticket } from '@/entities/ticket'
 import { AddCommentForm } from '@/features/comment-add'
@@ -43,9 +42,7 @@ export function TicketComments({ ticket, comments, loading, error, onRetry, name
       return (
         <EmptyState
           compact
-          icon={<IconMessageCircle size={20} stroke={1.5} />}
-          title="Коментарів ще немає"
-          description="Поставте запитання або додайте уточнення щодо проблеми."
+          title="Коментарів ще немає."
         />
       )
     }
@@ -67,7 +64,7 @@ export function TicketComments({ ticket, comments, loading, error, onRetry, name
   return (
     <Stack gap="lg">
       {renderList()}
-      <Divider />
+      <Divider color="var(--app-border-subtle)" />
       <AddCommentForm ticketId={ticket.id} />
     </Stack>
   )

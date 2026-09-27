@@ -1,0 +1,18 @@
+.item {
+  --tl-color: var(--app-border-strong);
+}
+
+.item :global(.mantine-Timeline-itemBody) {
+  padding-bottom: 4px;
+}
+
+.bullet {
+  background: var(--app-surface-primary);
+  border-color: var(--app-border-strong);
+  border-width: 2px;
+}
+
+.item[data-tone='positive'] .bullet {
+  background: var(--app-tone-positive-fg);
+  border-color: var(--app-tone-positive-fg);
+}
