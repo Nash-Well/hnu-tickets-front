@@ -1,6 +1,6 @@
-import { Alert, Button, Group, Modal, Stack, Text, Textarea } from '@mantine/core'
+import { Group, Modal, Stack, Text, Textarea } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { IconAlertCircle, IconArrowRight } from '@tabler/icons-react'
+import { IconArrowRight } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 import { commentApi } from '@/entities/comment'
 import {
@@ -11,8 +11,9 @@ import {
   type TicketStatus,
   useSyncTicket,
 } from '@/entities/ticket'
-import { getErrorMessage } from '@/shared/api'
 import { notifyError, notifySuccess } from '@/shared/lib'
+import { FormErrorAlert, ModalActions } from '@/shared/ui'
+import { emphasisConfirmColor } from '../model/emphasis'
 import type { TransitionConfig } from '../model/transition-config'
 
 type StatusTransitionModalProps = {
@@ -76,20 +77,16 @@ function TransitionForm({ ticket, target, config, onClose }: TransitionFormProps
     <form onSubmit={form.onSubmit(({ comment }) => changeStatus.mutate(comment.trim()))} noValidate>
       <Stack gap="md">
         <Group gap="xs">
-          <StatusBadge status={ticket.status} size="lg" />
+          <StatusBadge status={ticket.status} />
           <IconArrowRight size={16} aria-hidden />
-          <StatusBadge status={target} size="lg" />
+          <StatusBadge status={target} />
         </Group>
         {config.description && (
           <Text size="sm" c="dimmed">
             {config.description}
           </Text>
         )}
-        {changeStatus.isError && (
-          <Alert color="red" variant="light" icon={<IconAlertCircle size={18} />} role="alert">
-            {getErrorMessage(changeStatus.error)}
-          </Alert>
-        )}
+        <FormErrorAlert error={changeStatus.error} />
         <Textarea
           label={config.commentLabel}
           description={config.commentRequired ? undefined : 'Необов’язково. Буде додано як коментар до заявки.'}
@@ -100,14 +97,7 @@ function TransitionForm({ ticket, target, config, onClose }: TransitionFormProps
           data-autofocus
           {...form.getInputProps('comment')}
         />
-        <Group justify="flex-end">
-          <Button variant="default" onClick={onClose} disabled={changeStatus.isPending}>
-            Назад
-          </Button>
-          <Button type="submit" color={config.color} loading={changeStatus.isPending}>
-            {config.confirmLabel}
-          </Button>
-        </Group>
+        <ModalActions onCancel={onClose} submitLabel={config.confirmLabel} pending={changeStatus.isPending} submitColor={emphasisConfirmColor[config.emphasis]} cancelLabel="Назад" />
       </Stack>
     </form>
   )
@@ -116,7 +106,7 @@ function TransitionForm({ ticket, target, config, onClose }: TransitionFormProps
 export function StatusTransitionModal({ ticket, target, config, onClose }: StatusTransitionModalProps) {
   const opened = Boolean(target && config)
   return (
-    <Modal opened={opened} onClose={onClose} title={config?.title} centered size="md">
+    <Modal opened={opened} onClose={onClose} title={config?.title} size="md">
       {target && config && <TransitionForm ticket={ticket} target={target} config={config} onClose={onClose} />}
     </Modal>
   )

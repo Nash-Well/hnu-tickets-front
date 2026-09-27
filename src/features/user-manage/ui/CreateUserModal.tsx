@@ -1,9 +1,8 @@
-import { Alert, Button, Group, Modal, PasswordInput, Select, Stack, TextInput } from '@mantine/core'
+import { Modal, PasswordInput, Select, Stack, TextInput } from '@mantine/core'
 import { schemaResolver, useForm } from '@mantine/form'
-import { IconAlertCircle } from '@tabler/icons-react'
 import { roleOptions, userErrorFields } from '@/entities/user'
-import { getErrorMessage } from '@/shared/api'
 import { applyApiErrorToForm } from '@/shared/lib'
+import { FormErrorAlert, ModalActions } from '@/shared/ui'
 import { createUserSchema, type CreateUserValues } from '../model/schema'
 import { useCreateUser } from '../model/use-user-mutations'
 
@@ -30,11 +29,7 @@ function CreateUserForm({ onClose }: { onClose: () => void }) {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)} noValidate>
       <Stack gap="md">
-        {createUser.isError && !fieldHasError && (
-          <Alert color="red" variant="light" icon={<IconAlertCircle size={18} />} role="alert">
-            {getErrorMessage(createUser.error)}
-          </Alert>
-        )}
+        <FormErrorAlert error={createUser.error} visible={!fieldHasError} />
         <TextInput label="Повне ім’я" required data-autofocus key={form.key('name')} {...form.getInputProps('name')} />
         <TextInput label="Email" type="email" required key={form.key('email')} {...form.getInputProps('email')} />
         <PasswordInput
@@ -53,14 +48,7 @@ function CreateUserForm({ onClose }: { onClose: () => void }) {
           key={form.key('role')}
           {...form.getInputProps('role')}
         />
-        <Group justify="flex-end">
-          <Button variant="default" onClick={onClose} disabled={createUser.isPending}>
-            Скасувати
-          </Button>
-          <Button type="submit" loading={createUser.isPending}>
-            Створити
-          </Button>
-        </Group>
+        <ModalActions onCancel={onClose} submitLabel="Створити" pending={createUser.isPending} />
       </Stack>
     </form>
   )
@@ -68,7 +56,7 @@ function CreateUserForm({ onClose }: { onClose: () => void }) {
 
 export function CreateUserModal({ opened, onClose }: { opened: boolean; onClose: () => void }) {
   return (
-    <Modal opened={opened} onClose={onClose} title="Новий користувач" centered>
+    <Modal opened={opened} onClose={onClose} title="Новий користувач">
       {opened && <CreateUserForm onClose={onClose} />}
     </Modal>
   )

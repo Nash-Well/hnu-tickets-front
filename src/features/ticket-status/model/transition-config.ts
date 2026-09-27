@@ -1,116 +1,105 @@
 import type { TicketStatus } from '@/entities/ticket'
 
+export type TransitionEmphasis = 'primary' | 'secondary' | 'danger'
+
 export type TransitionConfig = {
   label: string
   title: string
   description: string
   confirmLabel: string
-  color: string
-  variant: 'filled' | 'light' | 'default'
+  emphasis: TransitionEmphasis
   commentLabel: string
   commentRequired: boolean
   commentPrefix: string
 }
+
+const base = { commentLabel: 'Коментар', commentRequired: false, commentPrefix: '' }
 
 export function getTransitionConfig(from: TicketStatus, to: TicketStatus, isRequester: boolean): TransitionConfig {
   switch (to) {
     case 'IN_PROGRESS':
       if (from === 'RESOLVED') {
         return {
+          ...base,
           label: 'Відкрити повторно',
           title: 'Повторне відкриття заявки',
           description: 'Заявка повернеться у статус «В роботі».',
           confirmLabel: 'Відкрити повторно',
-          color: 'orange',
-          variant: 'light',
+          emphasis: 'secondary',
           commentLabel: 'Причина повторного відкриття',
-          commentRequired: false,
           commentPrefix: 'Повторне відкриття',
         }
       }
       if (from === 'WAITING_FOR_USER') {
         return {
+          ...base,
           label: isRequester ? 'Інформацію надано' : 'Продовжити роботу',
           title: isRequester ? 'Відповідь спеціалісту' : 'Продовження роботи',
           description: 'Заявка повернеться у статус «В роботі».',
           confirmLabel: isRequester ? 'Надіслати' : 'Продовжити',
-          color: 'violet',
-          variant: 'filled',
+          emphasis: 'primary',
           commentLabel: isRequester ? 'Ваша відповідь' : 'Коментар',
-          commentRequired: false,
-          commentPrefix: '',
         }
       }
       return {
+        ...base,
         label: 'Взяти в роботу',
         title: 'Прийняти заявку в роботу',
         description: 'Заявка перейде у статус «В роботі».',
         confirmLabel: 'Взяти в роботу',
-        color: 'violet',
-        variant: 'filled',
-        commentLabel: 'Коментар',
-        commentRequired: false,
-        commentPrefix: '',
+        emphasis: 'primary',
       }
     case 'WAITING_FOR_USER':
       return {
+        ...base,
         label: 'Запросити інформацію',
         title: 'Очікування відповіді користувача',
         description: 'Опишіть, яка інформація потрібна від користувача.',
         confirmLabel: 'Надіслати запит',
-        color: 'yellow',
-        variant: 'light',
+        emphasis: 'secondary',
         commentLabel: 'Запит до користувача',
         commentRequired: true,
-        commentPrefix: '',
       }
     case 'RESOLVED':
       return {
+        ...base,
         label: 'Позначити вирішеною',
         title: 'Результат виконання',
         description: 'Опишіть, що було зроблено для вирішення проблеми. Автор заявки зможе підтвердити результат.',
         confirmLabel: 'Позначити вирішеною',
-        color: 'teal',
-        variant: 'filled',
+        emphasis: 'primary',
         commentLabel: 'Результат виконання',
         commentRequired: true,
         commentPrefix: 'Результат виконання',
       }
     case 'CLOSED':
       return {
+        ...base,
         label: isRequester ? 'Підтвердити та закрити' : 'Закрити заявку',
         title: 'Закриття заявки',
         description: 'Після закриття заявку неможливо буде змінити.',
         confirmLabel: 'Закрити заявку',
-        color: 'gray',
-        variant: 'filled',
-        commentLabel: 'Коментар',
-        commentRequired: false,
-        commentPrefix: '',
+        emphasis: 'primary',
       }
     case 'CANCELLED':
       return {
+        ...base,
         label: 'Скасувати заявку',
         title: 'Скасування заявки',
         description: 'Скасовану заявку неможливо відновити.',
         confirmLabel: 'Скасувати заявку',
-        color: 'red',
-        variant: 'light',
+        emphasis: 'danger',
         commentLabel: 'Причина скасування',
-        commentRequired: false,
         commentPrefix: 'Причина скасування',
       }
     default:
       return {
+        ...base,
         label: 'Змінити статус',
         title: 'Зміна статусу',
         description: '',
         confirmLabel: 'Підтвердити',
-        color: 'indigo',
-        variant: 'light',
-        commentLabel: 'Коментар',
-        commentRequired: false,
-        commentPrefix: '',
+        emphasis: 'secondary',
       }
   }
 }

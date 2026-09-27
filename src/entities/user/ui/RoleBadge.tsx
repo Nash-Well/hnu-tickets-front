@@ -1,11 +1,11 @@
-import { Badge } from '@mantine/core'
-import { roleColors, roleLabels } from '../model/roles'
+import { Text } from '@mantine/core'
+import { roleLabels } from '../model/roles'
 import type { UserRole } from '../model/types'
 
 export function RoleBadge({ role }: { role: UserRole }) {
   return (
-    <Badge color={roleColors[role]} variant="light" radius="sm" miw="max-content">
+    <Text span size="sm" c="dimmed">
       {roleLabels[role]}
-    </Badge>
+    </Text>
   )
 }

@@ -1,10 +1,9 @@
-import { Group, Select, SimpleGrid, Stack, Text, Textarea, TextInput } from '@mantine/core'
+import { Select, SimpleGrid, Stack, Text, Textarea, TextInput } from '@mantine/core'
 import type { UseFormReturnType } from '@mantine/form'
 import { priorityDescriptions } from '../model/labels'
 import { priorityOptions } from '../model/options'
 import type { TicketPriority } from '../model/types'
 import type { TicketFormValues } from '../model/validation'
-import { PriorityBadge } from './PriorityBadge'
 
 type TicketFormFieldsProps = {
   form: UseFormReturnType<TicketFormValues>
@@ -51,15 +50,16 @@ export function TicketFormFields({ form, categoryOptions, categoriesLoading = fa
           required
           allowDeselect={false}
           renderOption={({ option }) => (
-            <Stack gap={2}>
-              <Group gap="xs">
-                <PriorityBadge priority={option.value as TicketPriority} />
-              </Group>
+            <Stack gap={0}>
+              <Text size="sm" fw={500}>
+                {option.label}
+              </Text>
               <Text size="xs" c="dimmed">
                 {priorityDescriptions[option.value as TicketPriority]}
               </Text>
             </Stack>
           )}
+          description={priorityDescriptions[form.getValues().priority]}
           key={form.key('priority')}
           {...form.getInputProps('priority')}
         />

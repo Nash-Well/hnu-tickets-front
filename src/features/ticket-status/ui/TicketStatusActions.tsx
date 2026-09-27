@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Button, Stack, Text } from '@mantine/core'
 import { useViewer } from '@/entities/session'
 import { getAvailableTransitions, type Ticket, type TicketStatus } from '@/entities/ticket'
+import { emphasisButtonProps } from '../model/emphasis'
 import { getTransitionConfig } from '../model/transition-config'
 import { StatusTransitionModal } from './StatusTransitionModal'
 
@@ -27,7 +28,7 @@ export function TicketStatusActions({ ticket }: { ticket: Ticket }) {
         {transitions.map((status) => {
           const config = getTransitionConfig(ticket.status, status, isRequester)
           return (
-            <Button key={status} color={config.color} variant={config.variant} fullWidth onClick={() => setTarget(status)}>
+            <Button key={status} {...emphasisButtonProps[config.emphasis]} fullWidth onClick={() => setTarget(status)}>
               {config.label}
             </Button>
           )

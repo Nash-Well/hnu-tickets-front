@@ -1,3 +1,4 @@
+import type { Tone } from '@/shared/config'
 import type { HistoryAction } from './types'
 
 export const historyActionLabels: Record<HistoryAction, string> = {
@@ -13,15 +14,15 @@ export const historyActionLabels: Record<HistoryAction, string> = {
   CLOSED: 'Заявку закрито',
 }
 
-export const historyActionColors: Record<HistoryAction, string> = {
-  CREATED: 'blue',
-  UPDATED: 'gray',
-  STATUS_CHANGED: 'violet',
-  ASSIGNED: 'cyan',
-  REASSIGNED: 'cyan',
-  PRIORITY_CHANGED: 'orange',
-  CATEGORY_CHANGED: 'grape',
-  CANCELLED: 'red',
-  RESOLVED: 'teal',
-  CLOSED: 'dark',
+export const historyActionTone: Record<HistoryAction, Tone> = {
+  CREATED: 'neutral',
+  UPDATED: 'neutral',
+  STATUS_CHANGED: 'neutral',
+  ASSIGNED: 'neutral',
+  REASSIGNED: 'neutral',
+  PRIORITY_CHANGED: 'neutral',
+  CATEGORY_CHANGED: 'neutral',
+  CANCELLED: 'neutral',
+  RESOLVED: 'positive',
+  CLOSED: 'neutral',
 }

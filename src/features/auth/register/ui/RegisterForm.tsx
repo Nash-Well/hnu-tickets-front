@@ -1,10 +1,9 @@
-import { Alert, Button, PasswordInput, Stack, TextInput } from '@mantine/core'
+import { Button, PasswordInput, Stack, TextInput } from '@mantine/core'
 import { schemaResolver, useForm } from '@mantine/form'
-import { IconAlertCircle, IconAt, IconLock, IconUser } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 import { sessionApi, useStartSession } from '@/entities/session'
-import { getErrorMessage } from '@/shared/api'
 import { applyApiErrorToForm } from '@/shared/lib'
+import { FormErrorAlert } from '@/shared/ui'
 import { userErrorFields } from '@/entities/user'
 import { registerSchema, type RegisterValues } from '../model/schema'
 
@@ -41,16 +40,11 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)} noValidate>
       <Stack gap="md">
-        {register.isError && !errorIsMappedToField && (
-          <Alert color="red" variant="light" icon={<IconAlertCircle size={18} />} role="alert">
-            {getErrorMessage(register.error)}
-          </Alert>
-        )}
+        <FormErrorAlert error={register.error} visible={!errorIsMappedToField} />
         <TextInput
           label="Повне ім’я"
           placeholder="Іван Петренко"
           autoComplete="name"
-          leftSection={<IconUser size={16} />}
           required
           key={form.key('name')}
           {...form.getInputProps('name')}
@@ -60,7 +54,6 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
           placeholder="name@example.com"
           type="email"
           autoComplete="email"
-          leftSection={<IconAt size={16} />}
           required
           key={form.key('email')}
           {...form.getInputProps('email')}
@@ -69,7 +62,6 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
           label="Пароль"
           description="Щонайменше 8 символів"
           autoComplete="new-password"
-          leftSection={<IconLock size={16} />}
           required
           key={form.key('password')}
           {...form.getInputProps('password')}
@@ -77,7 +69,6 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
         <PasswordInput
           label="Підтвердження пароля"
           autoComplete="new-password"
-          leftSection={<IconLock size={16} />}
           required
           key={form.key('confirmPassword')}
           {...form.getInputProps('confirmPassword')}

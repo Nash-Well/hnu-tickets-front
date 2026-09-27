@@ -48,7 +48,7 @@ export function AddCommentForm({ ticketId }: { ticketId: string }) {
           {...form.getInputProps('content')}
         />
         <Group justify="space-between">
-          <Text size="xs" c={length > MAX_LENGTH ? 'red' : 'dimmed'}>
+          <Text size="xs" c={length > MAX_LENGTH ? 'var(--app-tone-danger-fg)' : 'dimmed'}>
             {length} / {MAX_LENGTH}
           </Text>
           <Button type="submit" leftSection={<IconSend size={16} />} loading={addComment.isPending}>

@@ -64,7 +64,7 @@ export function AssignSpecialistForm({ ticket }: { ticket: Ticket }) {
         />
         <Tooltip label="Підібрати спеціаліста з найменшою кількістю активних заявок" withArrow multiline maw={240}>
           <ActionIcon
-            variant="light"
+            variant="default"
             size={36}
             onClick={suggestSpecialist}
             disabled={!workload.data?.length}
@@ -80,6 +80,7 @@ export function AssignSpecialistForm({ ticket }: { ticket: Ticket }) {
         </Text>
       )}
       <Button
+        variant="default"
         leftSection={<IconUserCheck size={16} />}
         onClick={() => specialistId && assign.mutate(specialistId)}
         disabled={!specialistId || unchanged}

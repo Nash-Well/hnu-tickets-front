@@ -1,18 +1,15 @@
-import { Badge, type BadgeProps, Tooltip } from '@mantine/core'
-import { statusColors, statusDescriptions, statusLabels } from '../model/labels'
+import { Tooltip } from '@mantine/core'
+import { ToneBadge } from '@/shared/ui'
+import { statusAppearance, statusDescriptions, statusLabels } from '../model/labels'
 import type { TicketStatus } from '../model/types'
 
-type StatusBadgeProps = Omit<BadgeProps, 'children' | 'color'> & {
+type StatusBadgeProps = {
   status: TicketStatus
   withTooltip?: boolean
 }
 
-export function StatusBadge({ status, withTooltip = false, ...props }: StatusBadgeProps) {
-  const badge = (
-    <Badge color={statusColors[status]} variant="light" radius="sm" miw="max-content" {...props}>
-      {statusLabels[status]}
-    </Badge>
-  )
+export function StatusBadge({ status, withTooltip = false }: StatusBadgeProps) {
+  const badge = <ToneBadge {...statusAppearance[status]}>{statusLabels[status]}</ToneBadge>
   if (!withTooltip) {
     return badge
   }

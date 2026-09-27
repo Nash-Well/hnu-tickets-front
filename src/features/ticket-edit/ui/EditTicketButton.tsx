@@ -1,7 +1,7 @@
-import { Alert, Button, Group, Modal } from '@mantine/core'
+import { Button, Modal, Stack } from '@mantine/core'
 import { schemaResolver, useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { IconAlertCircle, IconPencil } from '@tabler/icons-react'
+import { IconPencil } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 import { useCategoryOptions } from '@/entities/category'
 import {
@@ -14,8 +14,8 @@ import {
   type UpdateTicketPayload,
   useSyncTicket,
 } from '@/entities/ticket'
-import { getErrorMessage } from '@/shared/api'
 import { applyApiErrorToForm, notifyInfo, notifySuccess } from '@/shared/lib'
+import { FormErrorAlert, ModalActions } from '@/shared/ui'
 
 function toFormValues(ticket: Ticket): TicketFormValues {
   return {
@@ -40,7 +40,6 @@ function EditTicketForm({ ticket, onDone }: { ticket: Ticket; onDone: () => void
   const categories = useCategoryOptions()
   const syncTicket = useSyncTicket()
   const form = useForm<TicketFormValues>({
-    mode: 'uncontrolled',
     initialValues: toFormValues(ticket),
     validate: schemaResolver(ticketFormSchema, { sync: true }),
     validateInputOnBlur: true,
@@ -68,20 +67,11 @@ function EditTicketForm({ ticket, onDone }: { ticket: Ticket; onDone: () => void
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)} noValidate>
-      {updateTicket.isError && !Object.keys(form.errors).length && (
-        <Alert color="red" variant="light" icon={<IconAlertCircle size={18} />} mb="md" role="alert">
-          {getErrorMessage(updateTicket.error)}
-        </Alert>
-      )}
-      <TicketFormFields form={form} categoryOptions={categories.options} categoriesLoading={categories.isLoading} />
-      <Group justify="flex-end" mt="xl">
-        <Button variant="default" onClick={onDone} disabled={updateTicket.isPending}>
-          Скасувати
-        </Button>
-        <Button type="submit" loading={updateTicket.isPending}>
-          Зберегти зміни
-        </Button>
-      </Group>
+      <Stack gap="md">
+        <FormErrorAlert error={updateTicket.error} visible={!Object.keys(form.errors).length} />
+        <TicketFormFields form={form} categoryOptions={categories.options} categoriesLoading={categories.isLoading} />
+        <ModalActions onCancel={onDone} submitLabel="Зберегти зміни" pending={updateTicket.isPending} />
+      </Stack>
     </form>
   )
 }
@@ -93,7 +83,7 @@ export function EditTicketButton({ ticket }: { ticket: Ticket }) {
       <Button variant="default" leftSection={<IconPencil size={16} />} onClick={open}>
         Редагувати
       </Button>
-      <Modal opened={opened} onClose={close} title="Редагування заявки" size="lg" centered>
+      <Modal opened={opened} onClose={close} title="Редагування заявки" size="lg">
         {opened && <EditTicketForm ticket={ticket} onDone={close} />}
       </Modal>
     </>

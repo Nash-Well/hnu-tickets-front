@@ -1,9 +1,8 @@
-import { Alert, Button, Group, Modal, Stack, TextInput } from '@mantine/core'
+import { Modal, Stack, TextInput } from '@mantine/core'
 import { schemaResolver, useForm } from '@mantine/form'
-import { IconAlertCircle } from '@tabler/icons-react'
 import { type User, userErrorFields } from '@/entities/user'
-import { getErrorMessage } from '@/shared/api'
 import { applyApiErrorToForm, notifyInfo } from '@/shared/lib'
+import { FormErrorAlert, ModalActions } from '@/shared/ui'
 import { editUserSchema, type EditUserValues } from '../model/schema'
 import { useUpdateUser } from '../model/use-user-mutations'
 
@@ -37,21 +36,10 @@ function EditUserForm({ user, onClose }: { user: User; onClose: () => void }) {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)} noValidate>
       <Stack gap="md">
-        {updateUser.isError && !form.errors.name && !form.errors.email && (
-          <Alert color="red" variant="light" icon={<IconAlertCircle size={18} />} role="alert">
-            {getErrorMessage(updateUser.error)}
-          </Alert>
-        )}
+        <FormErrorAlert error={updateUser.error} visible={!form.errors.name && !form.errors.email} />
         <TextInput label="Повне ім’я" required data-autofocus key={form.key('name')} {...form.getInputProps('name')} />
         <TextInput label="Email" type="email" required key={form.key('email')} {...form.getInputProps('email')} />
-        <Group justify="flex-end">
-          <Button variant="default" onClick={onClose} disabled={updateUser.isPending}>
-            Скасувати
-          </Button>
-          <Button type="submit" loading={updateUser.isPending}>
-            Зберегти
-          </Button>
-        </Group>
+        <ModalActions onCancel={onClose} submitLabel="Зберегти" pending={updateUser.isPending} />
       </Stack>
     </form>
   )
@@ -64,7 +52,7 @@ type EditUserModalProps = {
 
 export function EditUserModal({ user, onClose }: EditUserModalProps) {
   return (
-    <Modal opened={Boolean(user)} onClose={onClose} title="Редагування користувача" centered>
+    <Modal opened={Boolean(user)} onClose={onClose} title="Редагування користувача">
       {user && <EditUserForm user={user} onClose={onClose} />}
     </Modal>
   )

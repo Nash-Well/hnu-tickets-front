@@ -1,4 +1,4 @@
-import { Anchor, Group, Skeleton, Table, Text, Tooltip } from '@mantine/core'
+import { Anchor, Table, Text, Tooltip } from '@mantine/core'
 import { Link, useNavigate } from 'react-router'
 import type { SortOrder, Ticket, TicketSortField } from '../model/types'
 import { PriorityBadge } from './PriorityBadge'
@@ -6,7 +6,7 @@ import { StatusBadge } from './StatusBadge'
 import { TicketId } from './TicketId'
 import { formatDateTime, formatRelative } from '@/shared/lib'
 import { paths } from '@/shared/routes'
-import { UserAvatar } from '@/shared/ui'
+import { TableSkeletonRows } from '@/shared/ui'
 import { SortableHeader } from './SortableHeader'
 import classes from './TicketsTable.module.css'
 
@@ -31,12 +31,9 @@ function Assignee({ ticket }: { ticket: Ticket }) {
     )
   }
   return (
-    <Group gap={8} wrap="nowrap">
-      <UserAvatar name={ticket.assignedTo.name} size={24} />
-      <Text size="sm" truncate>
-        {ticket.assignedTo.name}
-      </Text>
-    </Group>
+    <Text size="sm" truncate>
+      {ticket.assignedTo.name}
+    </Text>
   )
 }
 
@@ -55,13 +52,7 @@ export function TicketsTable({
   const columnCount = 6 + Number(showAuthor) + Number(showAssignee) - Number(compact)
 
   const rows = loading
-    ? Array.from({ length: skeletonRows }, (_, index) => (
-        <Table.Tr key={`skeleton-${index}`}>
-          <Table.Td colSpan={columnCount}>
-            <Skeleton height={22} radius="sm" />
-          </Table.Td>
-        </Table.Tr>
-      ))
+    ? TableSkeletonRows({ rows: skeletonRows, columns: columnCount })
     : tickets.map((ticket) => (
         <Table.Tr
           key={ticket.id}
@@ -76,7 +67,7 @@ export function TicketsTable({
             <TicketId id={ticket.id} />
           </Table.Td>
           <Table.Td className={classes.titleCell}>
-            <Anchor component={Link} to={paths.ticket(ticket.id)} fw={600} size="sm" c="var(--mantine-color-text)" lineClamp={2}>
+            <Anchor component={Link} to={paths.ticket(ticket.id)} fw={500} size="sm" c="var(--mantine-color-text)" lineClamp={2}>
               {ticket.title}
             </Anchor>
             {showAuthor && (
@@ -122,7 +113,7 @@ export function TicketsTable({
 
   return (
     <Table.ScrollContainer minWidth={compact ? 520 : 640}>
-      <Table verticalSpacing="sm" highlightOnHover={!loading} aria-busy={loading}>
+      <Table highlightOnHover={!loading} aria-busy={loading}>
         <Table.Thead>
           <Table.Tr>
             <Table.Th w={110}>ID</Table.Th>

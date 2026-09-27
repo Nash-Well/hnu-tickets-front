@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, CloseButton, Grid, Paper, Select, TextInput } from '@mantine/core'
+import { Box, Button, CloseButton, Grid, Select, TextInput } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import { useDebouncedCallback } from '@mantine/hooks'
 import { IconCalendar, IconFilterOff, IconSearch } from '@tabler/icons-react'
@@ -38,7 +38,7 @@ export function TicketFiltersBar({ params, showSpecialistFilter }: TicketFilters
   const span = showSpecialistFilter ? { base: 12, sm: 6, lg: 2 } : { base: 12, sm: 6, lg: 2.4 }
 
   return (
-    <Paper withBorder radius="md" p="md" mb="md">
+    <Box mb="md">
       <Grid gap="sm" align="flex-end">
         <Grid.Col span={{ base: 12, lg: showSpecialistFilter ? 4 : 4.8 }}>
           <TextInput
@@ -116,10 +116,10 @@ export function TicketFiltersBar({ params, showSpecialistFilter }: TicketFilters
             maxDate={new Date()}
           />
         </Grid.Col>
+        {activeFilterCount > 0 && (
         <Grid.Col span={{ base: 12, sm: 4, lg: 'content' }}>
           <Button
             variant="subtle"
-            color="gray"
             leftSection={<IconFilterOff size={16} />}
             onClick={() => {
               applySearch.cancel()
@@ -127,13 +127,13 @@ export function TicketFiltersBar({ params, showSpecialistFilter }: TicketFilters
               setAppliedQuery('')
               resetFilters()
             }}
-            disabled={activeFilterCount === 0}
             fullWidth
           >
             Скинути фільтри
           </Button>
         </Grid.Col>
+        )}
       </Grid>
-    </Paper>
+    </Box>
   )
 }

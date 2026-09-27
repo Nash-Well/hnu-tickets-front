@@ -5,7 +5,7 @@ import { shortId } from '@/shared/lib'
 export function TicketId({ id, withCopy = false }: { id: string; withCopy?: boolean }) {
   return (
     <Group gap={4} wrap="nowrap">
-      <Text ff="monospace" size="sm" c="dimmed" title={id}>
+      <Text ff="monospace" size="xs" c="dimmed" title={id}>
         #{shortId(id)}
       </Text>
       {withCopy && (
@@ -14,7 +14,7 @@ export function TicketId({ id, withCopy = false }: { id: string; withCopy?: bool
             <Tooltip label={copied ? 'Скопійовано' : 'Копіювати повний ідентифікатор'} withArrow>
               <ActionIcon
                 variant="subtle"
-                color={copied ? 'teal' : 'gray'}
+                color="gray"
                 size="sm"
                 onClick={copy}
                 aria-label="Копіювати ідентифікатор заявки"

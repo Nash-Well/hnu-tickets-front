@@ -9,10 +9,12 @@ export {
   useTicketStatusCounts,
 } from './api/ticket-queries'
 export {
-  priorityColors,
+  priorityAppearance,
+  priorityChartColor,
   priorityDescriptions,
   priorityLabels,
-  statusColors,
+  statusAppearance,
+  statusChartColor,
   statusDescriptions,
   statusLabels,
 } from './model/labels'
