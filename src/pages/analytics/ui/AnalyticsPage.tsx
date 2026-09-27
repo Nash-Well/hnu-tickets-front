@@ -17,17 +17,17 @@ export function AnalyticsPage() {
     <>
       <PageHeader
         title="Аналітика"
-        description="Статистика роботи служби технічної підтримки за обраний період (за датою створення заявок)"
+        description="Період застосовується до дати створення заявок"
         actions={<PeriodPicker state={periodState} />}
       />
       <Stack gap="lg">
-        <OverviewCards period={period} withClosedRate />
+        <OverviewCards period={period} />
         <CreatedPerDayChart period={period} />
         <Grid gap="lg">
-          <Grid.Col span={{ base: 12, lg: 7 }}>
+          <Grid.Col span={{ base: 12, md: 6 }}>
             <StatusChart period={period} />
           </Grid.Col>
-          <Grid.Col span={{ base: 12, lg: 5 }}>
+          <Grid.Col span={{ base: 12, md: 6 }}>
             <PriorityChart period={period} />
           </Grid.Col>
           <Grid.Col span={{ base: 12, lg: 6 }}>

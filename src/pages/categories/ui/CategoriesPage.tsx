@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { ActionIcon, Button, Group, Paper, Skeleton, Table, Text, Tooltip, VisuallyHidden } from '@mantine/core'
-import { IconCategory, IconPencil, IconPlus, IconTrash } from '@tabler/icons-react'
+import { ActionIcon, Button, Group, Table, Text, Tooltip, VisuallyHidden } from '@mantine/core'
+import { IconPencil, IconPlus, IconTrash } from '@tabler/icons-react'
 import { type Category, useCategories } from '@/entities/category'
+import { toneColor } from '@/shared/config'
 import { CategoryFormModal, useDeleteCategory } from '@/features/category-manage'
-import { confirmAction, EmptyState, ErrorState, PageHeader } from '@/shared/ui'
+import { confirmAction, EmptyState, ErrorState, PageHeader, SectionCard, TableSkeletonRows } from '@/shared/ui'
 
 type ModalState = { opened: false } | { opened: true; category: Category | null }
 
@@ -28,7 +29,6 @@ export function CategoriesPage() {
     if (categories.isSuccess && categories.data.length === 0) {
       return (
         <EmptyState
-          icon={<IconCategory size={28} stroke={1.5} />}
           title="Категорій ще немає"
           description="Створіть категорії, щоб користувачі могли класифікувати свої заявки."
           action={
@@ -41,7 +41,7 @@ export function CategoriesPage() {
     }
     return (
       <Table.ScrollContainer minWidth={520}>
-        <Table verticalSpacing="sm" highlightOnHover>
+        <Table highlightOnHover>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Назва</Table.Th>
@@ -53,17 +53,11 @@ export function CategoriesPage() {
           </Table.Thead>
           <Table.Tbody>
             {categories.isLoading
-              ? Array.from({ length: 6 }, (_, index) => (
-                  <Table.Tr key={index}>
-                    <Table.Td colSpan={3}>
-                      <Skeleton height={24} />
-                    </Table.Td>
-                  </Table.Tr>
-                ))
+              ? TableSkeletonRows({ rows: 6, columns: 3 })
               : categories.data?.map((category) => (
                   <Table.Tr key={category.id}>
                     <Table.Td>
-                      <Text size="sm" fw={600}>
+                      <Text size="sm" fw={500}>
                         {category.name}
                       </Text>
                     </Table.Td>
@@ -87,7 +81,7 @@ export function CategoriesPage() {
                         <Tooltip label="Видалити" withArrow>
                           <ActionIcon
                             variant="subtle"
-                            color="red"
+                            color={toneColor.danger}
                             onClick={() => requestDelete(category)}
                             loading={deleteCategory.isPending && deleteCategory.variables?.id === category.id}
                             aria-label={`Видалити ${category.name}`}
@@ -109,16 +103,13 @@ export function CategoriesPage() {
     <>
       <PageHeader
         title="Категорії заявок"
-        description="Класифікація технічних проблем, доступна користувачам під час створення заявки"
         actions={
           <Button leftSection={<IconPlus size={16} />} onClick={() => setModal({ opened: true, category: null })}>
             Нова категорія
           </Button>
         }
       />
-      <Paper withBorder radius="md">
-        {renderBody()}
-      </Paper>
+      <SectionCard flush>{renderBody()}</SectionCard>
       <CategoryFormModal
         opened={modal.opened}
         category={modal.opened ? modal.category : null}

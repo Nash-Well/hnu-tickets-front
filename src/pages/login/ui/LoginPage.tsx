@@ -11,10 +11,9 @@ export function LoginPage() {
 
   return (
     <AuthLayout
-      title="Вхід до системи"
-      subtitle="Увійдіть, щоб створювати та відстежувати заявки."
+      title="Вхід"
       footer={
-        <Text size="sm" ta="center" c="dimmed">
+        <Text size="sm" c="dimmed">
           Ще не маєте облікового запису?{' '}
           <Anchor component={Link} to={paths.register} state={location.state} fw={600}>
             Зареєструватися

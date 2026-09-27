@@ -1,12 +1,11 @@
 import { useMemo, useState } from 'react'
 import {
   ActionIcon,
+  Box,
   Button,
   Grid,
   Group,
-  Paper,
   SegmentedControl,
-  Skeleton,
   Table,
   Text,
   TextInput,
@@ -14,12 +13,12 @@ import {
   VisuallyHidden,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { IconPencil, IconSearch, IconSearchOff, IconUserPlus } from '@tabler/icons-react'
+import { IconPencil, IconSearch, IconUserPlus } from '@tabler/icons-react'
 import { useViewer } from '@/entities/session'
 import { roleLabels, type User, type UserRole, USER_ROLES, useUsers } from '@/entities/user'
 import { CreateUserModal, EditUserModal, RoleSelect } from '@/features/user-manage'
 import { formatDate } from '@/shared/lib'
-import { EmptyState, ErrorState, PageHeader, UserAvatar } from '@/shared/ui'
+import { EmptyState, ErrorState, PageHeader, SectionCard, TableSkeletonRows, UserAvatar } from '@/shared/ui'
 
 type RoleFilter = UserRole | 'ALL'
 
@@ -50,13 +49,7 @@ export function UsersPage() {
 
   const renderRows = () => {
     if (users.isLoading) {
-      return Array.from({ length: 6 }, (_, index) => (
-        <Table.Tr key={index}>
-          <Table.Td colSpan={5}>
-            <Skeleton height={28} />
-          </Table.Td>
-        </Table.Tr>
-      ))
+      return <TableSkeletonRows rows={6} columns={5} />
     }
     return filtered.map((user) => {
       const isSelf = user.id === viewer.id
@@ -66,7 +59,7 @@ export function UsersPage() {
             <Group gap="sm" wrap="nowrap">
               <UserAvatar name={user.name} size={36} />
               <div style={{ minWidth: 0 }}>
-                <Text size="sm" fw={600} truncate>
+                <Text size="sm" fw={500} truncate>
                   {user.name} {isSelf && <Text span size="xs" c="dimmed">(ви)</Text>}
                 </Text>
                 <Text size="xs" c="dimmed" truncate>
@@ -113,7 +106,6 @@ export function UsersPage() {
     if (users.isSuccess && filtered.length === 0) {
       return (
         <EmptyState
-          icon={<IconSearchOff size={28} stroke={1.5} />}
           title="Користувачів не знайдено"
           description="Змініть параметри пошуку або фільтр ролі."
         />
@@ -121,7 +113,7 @@ export function UsersPage() {
     }
     return (
       <Table.ScrollContainer minWidth={560}>
-        <Table verticalSpacing="sm" highlightOnHover>
+        <Table highlightOnHover>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Користувач</Table.Th>
@@ -143,14 +135,13 @@ export function UsersPage() {
     <>
       <PageHeader
         title="Користувачі"
-        description="Керування обліковими записами та ролями доступу"
         actions={
           <Button leftSection={<IconUserPlus size={16} />} onClick={createModal.open}>
             Новий користувач
           </Button>
         }
       />
-      <Paper withBorder radius="md" p="md" mb="md">
+      <Box mb="md">
         <Grid gap="sm" align="flex-end">
           <Grid.Col span={{ base: 12, md: 5 }}>
             <TextInput
@@ -174,10 +165,8 @@ export function UsersPage() {
             />
           </Grid.Col>
         </Grid>
-      </Paper>
-      <Paper withBorder radius="md">
-        {renderBody()}
-      </Paper>
+      </Box>
+      <SectionCard flush>{renderBody()}</SectionCard>
       <EditUserModal user={editedUser} onClose={() => setEditedUser(null)} />
       <CreateUserModal opened={createOpened} onClose={createModal.close} />
     </>

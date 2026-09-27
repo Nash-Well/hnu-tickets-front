@@ -10,9 +10,8 @@ export function RegisterPage() {
   return (
     <AuthLayout
       title="Реєстрація"
-      subtitle="Створіть обліковий запис, щоб звертатися до служби технічної підтримки."
       footer={
-        <Text size="sm" ta="center" c="dimmed">
+        <Text size="sm" c="dimmed">
           Вже маєте обліковий запис?{' '}
           <Anchor component={Link} to={paths.login} fw={600}>
             Увійти

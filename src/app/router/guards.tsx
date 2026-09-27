@@ -4,8 +4,8 @@ import { useCurrentUser, useViewer, ViewerProvider } from '@/entities/session'
 import type { UserRole } from '@/entities/user'
 import { ForbiddenPage } from '@/pages/forbidden'
 import { paths } from '@/shared/routes'
-import { Button, Center, Paper } from '@mantine/core'
-import { ErrorState, FullPageLoader } from '@/shared/ui'
+import { Button, Center } from '@mantine/core'
+import { ErrorState, FullPageLoader, SectionCard } from '@/shared/ui'
 
 export function RequireAuth({ children }: { children: ReactNode }) {
   const location = useLocation()
@@ -20,14 +20,14 @@ export function RequireAuth({ children }: { children: ReactNode }) {
   if (currentUser.isError || !currentUser.data) {
     return (
       <Center mih="100dvh" p="md">
-        <Paper withBorder radius="md" p="md" maw={480} w="100%">
+        <SectionCard maw={480} w="100%">
           <ErrorState error={currentUser.error} onRetry={() => currentUser.refetch()} />
-          <Center pb="md">
+          <Center>
             <Button component="a" href={paths.login} variant="subtle">
               Перейти до входу
             </Button>
           </Center>
-        </Paper>
+        </SectionCard>
       </Center>
     )
   }
