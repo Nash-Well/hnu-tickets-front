@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '@fontsource-variable/inter'
+import '@fontsource-variable/ibm-plex-sans'
 import '@mantine/core/styles.css'
 import '@mantine/dates/styles.css'
 import '@mantine/charts/styles.css'

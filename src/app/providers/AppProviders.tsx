@@ -6,12 +6,13 @@ import { Notifications } from '@mantine/notifications'
 import { QueryClientProvider } from '@tanstack/react-query'
 import '@/shared/lib/dates'
 import { queryClient } from './query-client'
+import { cssVariablesResolver } from './css-variables'
 import { theme } from './theme'
 import { UnauthorizedHandler } from './UnauthorizedHandler'
 
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
-    <MantineProvider theme={theme} defaultColorScheme="auto">
+    <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver} defaultColorScheme="auto">
       <DatesProvider settings={{ locale: 'uk', firstDayOfWeek: 1 }}>
         <QueryClientProvider client={queryClient}>
           <ModalsProvider labels={{ confirm: 'Підтвердити', cancel: 'Скасувати' }}>
