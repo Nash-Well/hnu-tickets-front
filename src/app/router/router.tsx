@@ -65,6 +65,10 @@ export const router = createBrowserRouter([
             lazy: () => import('@/pages/profile').then(({ ProfilePage }) => ({ Component: ProfilePage })),
           },
           {
+            path: paths.help,
+            lazy: () => import('@/pages/help').then(({ HelpPage }) => ({ Component: HelpPage })),
+          },
+          {
             element: <RequireRole roles={['ADMIN']} />,
             children: [
               {

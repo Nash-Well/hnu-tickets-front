@@ -1,6 +1,7 @@
 import {
   IconCategory,
   IconChartBar,
+  IconHelpCircle,
   IconLayoutDashboard,
   IconSquarePlus,
   IconTicket,
@@ -28,6 +29,13 @@ const navigationItems: NavigationItem[] = [
   { label: 'Аналітика', to: paths.analytics, icon: IconChartBar, roles: ['ADMIN'], dividerBefore: true },
   { label: 'Користувачі', to: paths.users, icon: IconUsers, roles: ['ADMIN'] },
   { label: 'Категорії', to: paths.categories, icon: IconCategory, roles: ['ADMIN'] },
+  {
+    label: 'Довідка',
+    to: paths.help,
+    icon: IconHelpCircle,
+    roles: ['USER', 'SPECIALIST', 'ADMIN'],
+    dividerBefore: true,
+  },
 ]
 
 export function getNavigationForRole(role: UserRole): NavigationItem[] {

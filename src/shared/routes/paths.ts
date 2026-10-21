@@ -11,4 +11,5 @@ export const paths = {
   categories: '/categories',
   analytics: '/analytics',
   profile: '/profile',
+  help: '/help',
 } as const
