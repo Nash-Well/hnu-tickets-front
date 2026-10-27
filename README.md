@@ -47,6 +47,8 @@ When serving the production build from a different origin than the API, set `VIT
 | `pnpm build` | Type check and production build |
 | `pnpm typecheck` | TypeScript check |
 | `pnpm lint` | Oxlint |
+| `pnpm test` | Unit tests (Vitest) |
+| `pnpm test:integration` | Integration tests against a running backend with demo data; set `VITE_API_BASE_URL` for a server other than `http://localhost:8080/api/v1` |
 | `pnpm preview` | Preview the production build |
 
 ## Roles and features
